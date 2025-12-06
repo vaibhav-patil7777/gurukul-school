@@ -3,7 +3,7 @@ gunicorn==21.2.0
 whitenoise==6.5.0
 python-dotenv==1.0.0
 pytz==2024.1
-sqlparse==1.0.3
+sqlparse==0.4.4
 asgiref==3.8.0
 # optional database drivers:
 # mysqlclient==2.2.0
