@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>{% block title %}SchoolSite{% endblock %}</title>
+
+  <!-- Global Neon + Modern UI Styles -->
+  <style>
+    /* THEME COLORS */
+    :root{
+      --accent:#00eaff;
+      --accent2:#ff1cf7;
+      --bg:#0a0f1f;
+      --card-bg:rgba(255,255,255,0.10);
+      --border:rgba(255,255,255,0.15);
+      --text:#e9faff;
+      --muted:#9bb9c9;
+      --shadow:0 0 18px rgba(0,255,255,0.35);
+    }
+
+    /* RESET */
+    *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',system-ui;}
+    body{background:var(--bg);color:var(--text);overflow-x:hidden}
+
+    a{text-decoration:none;color:var(--text)}
+    img,video{display:block;width:100%}
+
+    /* CONTAINER */
+    .container{max-width:1250px;margin:auto;padding:18px}
+
+    /* HEADER */
+    header{
+      position:sticky;top:0;z-index:50;
+      background:rgba(0,0,0,0.35);
+      backdrop-filter:blur(12px);
+      box-shadow:0 3px 20px rgba(0,0,0,0.4);
+    }
+
+    .nav{
+      display:flex;justify-content:space-between;align-items:center;
+      padding:12px 10px;
+    }
+
+    .brand{
+      font-size:24px;font-weight:800;
+      background:linear-gradient(90deg,var(--accent),var(--accent2));
+      -webkit-background-clip:text;
+      color:transparent;
+      letter-spacing:1px;
+      text-transform:uppercase;
+    }
+
+    .menu{
+      display:flex;gap:20px;
+    }
+
+    .menu a{
+      padding:6px 10px;
+      font-weight:500;
+      transition:0.2s;
+      position:relative;
+    }
+
+    .menu a:hover{
+      color:var(--accent);
+    }
+
+    /* BUTTON */
+    .btn{
+      background:linear-gradient(90deg,var(--accent),var(--accent2));
+      padding:8px 16px;
+      border-radius:8px;
+      font-weight:600;
+      border:0;
+      color:#000;
+      cursor:pointer;
+      box-shadow:var(--shadow);
+      transition:0.25s;
+    }
+
+    .btn:hover{
+      transform:translateY(-2px);
+      box-shadow:0 0 20px rgba(0,255,255,0.55);
+    }
+
+    /* CARD STYLE */
+    .card{
+      background:var(--card-bg);
+      border:1px solid var(--border);
+      border-radius:14px;
+      padding:18px;
+      box-shadow:0 0 15px rgba(0,255,255,0.08);
+      backdrop-filter:blur(10px);
+    }
+
+    /* GRID */
+    .grid{display:grid;gap:18px}
+    .cols-3{grid-template-columns:repeat(3,1fr)}
+    .cols-responsive{grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+    .cols-4{grid-template-columns:repeat(4,1fr)}
+
+    /* GALLERY */
+    .thumb{
+      width:100%;height:170px;
+      overflow:hidden;border-radius:12px;
+      position:relative;
+      border:1px solid var(--border);
+      box-shadow:0 0 12px rgba(0,255,255,0.05);
+      transition:0.25s;
+    }
+
+    .thumb:hover{
+      transform:scale(1.03);
+      box-shadow:0 0 25px rgba(0,255,255,0.35);
+    }
+
+    .thumb img, .thumb video{
+      width:100%;height:100%;object-fit:cover;
+    }
+
+    /* MODAL */
+    .modal{
+      position:fixed;inset:0;
+      background:rgba(0,0,0,0.7);
+      backdrop-filter:blur(8px);
+      display:none;align-items:center;justify-content:center;
+      z-index:80;
+      padding:20px;
+    }
+
+    .modal.show{display:flex}
+
+    .modal .box{
+      max-width:950px;width:100%;
+      background:#0d162b;
+      border:1px solid var(--border);
+      border-radius:12px;
+      padding:16px;
+      position:relative;
+      box-shadow:0 0 35px rgba(0,255,255,0.25);
+    }
+
+    .modal .close{
+      position:absolute;right:14px;top:10px;
+      cursor:pointer;font-size:24px;
+      color:var(--accent);
+    }
+
+    /* FOOTER */
+    footer{
+      padding:25px 0;margin-top:40px;
+      text-align:center;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    /* MOBILE MENU */
+    @media(max-width:750px){
+      .menu{display:none}
+      .brand{font-size:20px}
+    }
+  </style>
+
+  {% block extra_head %}{% endblock %}
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="container nav">
+      <div class="left" style="display:flex;gap:20px;align-items:center;">
+        <div class="brand"><a href="{% url 'home' %}">GEMS</a></div>
+
+        <nav class="menu">
+          <a href="{% url 'home' %}">Home</a>
+          <a href="{% url 'about' %}">About</a>
+          <a href="{% url 'courses' %}">Courses</a>
+          <a href="{% url 'gallery' %}">Gallery</a>
+          <a href="{% url 'contact' %}">Contact</a>
+        </nav>
+      </div>
+
+      <div>
+        {% if user.is_authenticated %}
+          <a class="btn" href="{% url 'admin_dashboard' %}">Dashboard</a>
+        {% else %}
+          <a class="btn" href="/admin/login/?next=/admin-dashboard/">Admin Login</a>
+        {% endif %}
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="container" style="padding-top:25px">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    © {{ request.site|default:"SchoolSite" }} • Powered by Django • Neon School Edition
+  </footer>
+
+  <!-- GLOBAL SCRIPTS -->
+  <script>
+    function openModal(html){
+      const m=document.getElementById('globalModal');
+      m.querySelector('.modal-body').innerHTML=html;
+      m.classList.add('show');
+    }
+    function closeModal(){
+      document.getElementById('globalModal').classList.remove('show');
+    }
+  </script>
+
+  <!-- GLOBAL MODAL -->
+  <div id="globalModal" class="modal" onclick="if(event.target===this) closeModal()">
+    <div class="box">
+      <div class="close" onclick="closeModal()">✕</div>
+      <div class="modal-body"></div>
+    </div>
+  </div>
+
+  {% block extra_script %}{% endblock %}
+</body>
+</html>

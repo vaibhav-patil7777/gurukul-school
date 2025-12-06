@@ -1,0 +1,166 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Home — Prestige Academy{% endblock %}
+
+{% block content %}
+<style>
+/* HERO SECTION */
+.hero {
+  width: 100%;
+  height: 90vh;
+  background: url('{% static "images/hero.jpg" %}') center/cover no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--text);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Neon Overlay */
+.hero::before {
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.65),
+        rgba(10,15,31,0.8),
+        rgba(0,255,255,0.10)
+  );
+  backdrop-filter: blur(3px);
+}
+
+/* Glow Particles */
+.hero::after {
+  content:"";
+  position:absolute;
+  inset:0;
+  background:radial-gradient(circle at 20% 30%, rgba(0,255,255,0.25), transparent 55%),
+             radial-gradient(circle at 80% 75%, rgba(255,0,190,0.25), transparent 55%);
+  animation: slowGlow 6s infinite alternate ease-in-out;
+}
+
+@keyframes slowGlow {
+  from { opacity: 0.5; }
+  to { opacity: 1; }
+}
+
+.hero-content {
+  position: relative;
+  z-index: 10;
+  max-width: 800px;
+  padding: 20px;
+  animation: heroFade 1.5s ease-out;
+}
+
+@keyframes heroFade {
+  from { opacity:0; transform:translateY(25px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+/* School Name */
+.school-name {
+  font-family: 'Times New Roman', Times, serif;
+  font-weight: normal;
+  font-size: 40px;
+  color: #fff;
+  margin-bottom: 20px;
+}
+
+/* Main Hero Title */
+.hero h1 {
+  font-size: 65px;
+  font-weight: 800;
+  line-height: 1.2;
+  text-shadow: 0 0 18px rgba(0,255,255,0.25);
+}
+
+.hero h1 span {
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text;
+  color:transparent;
+}
+
+.hero p {
+  font-size: 22px;
+  margin: 18px 0 30px;
+  color: var(--muted);
+}
+
+/* Buttons */
+.btn-primary {
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  padding:12px 32px;
+  border-radius:10px;
+  font-size:18px;
+  font-weight:600;
+  border:0;
+  color:#000;
+  box-shadow:0 0 16px rgba(0,255,255,0.35);
+  transition:0.25s;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow:0 0 26px rgba(0,255,255,0.55);
+}
+
+.btn-outline {
+  padding:12px 32px;
+  border-radius:10px;
+  font-size:18px;
+  font-weight:600;
+  border:2px solid var(--accent);
+  color:var(--accent);
+  margin-left:10px;
+  transition:0.25s;
+}
+
+.btn-outline:hover {
+  background:var(--accent);
+  color:#000;
+  box-shadow:0 0 18px rgba(0,255,255,0.45);
+}
+
+/* Responsive */
+@media(max-width:900px){
+  .hero { height: 75vh; }
+  .school-name { font-size:32px; }
+  .hero h1 { font-size: 45px; }
+  .hero p { font-size: 18px; }
+}
+
+@media(max-width:600px){
+  .hero { height: 65vh; padding:0 15px; }
+  .school-name { font-size:24px; }
+  .hero h1 { font-size: 34px; }
+  .hero p { font-size: 16px; }
+  .btn-primary, .btn-outline { font-size:16px; padding:10px 24px; }
+}
+</style>
+
+<!-- HERO SECTION -->
+<div class="hero">
+  <div class="hero-content">
+    <!-- School Name -->
+    <div class="school-name">Gurukul English Medium School [GEMS] & Junior College</div>
+
+    <h1>Excellence in <span>Education</span></h1>
+    <br>
+        <div class="school-name"> GEMS is the educational diamond.</div>
+
+
+
+    <p>
+      Join a community of innovators, thinkers, and future leaders.
+      Prestige Academy offers world-class education designed to shape your future.
+    </p>
+
+    <a href="{% url 'courses' %}" class="btn-primary">Explore Courses</a>
+    <a href="{% url 'contact' %}" class="btn-outline">Visit Campus</a>
+  </div>
+</div>
+
+{% endblock %}

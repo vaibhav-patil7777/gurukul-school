@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% block title %}About — SchoolSite{% endblock %}
+
+{% block content %}
+
+<style>
+/* About page neon styles */
+.about-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  animation: fadeIn 0.9s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity:0; transform: translateY(10px); }
+  to   { opacity:1; transform: translateY(0); }
+}
+
+.about-card {
+  background: rgba(255,255,255,0.14);
+  backdrop-filter: blur(10px);
+  padding: 28px;
+  border-radius: 18px;
+  box-shadow: 0 0 18px rgba(0,255,255,0.18);
+  border: 1px solid rgba(0,255,255,0.25);
+}
+
+.about-title {
+  font-size: 34px;
+  font-weight: 700;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  color: transparent;
+  margin-bottom: 12px;
+}
+
+.about-text {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--muted);
+  max-width: 850px;
+}
+
+/* Two-column mission vision */
+.about-grid {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 18px;
+}
+
+.feature-card {
+  background: rgba(255,255,255,0.1);
+  border-radius: 14px;
+  padding: 20px;
+  border:1px solid rgba(0,255,255,0.2);
+  box-shadow: 0 0 12px rgba(0,255,255,0.12);
+}
+
+.feature-title {
+  font-size:22px;
+  font-weight:600;
+  margin-bottom:8px;
+  color:var(--accent);
+}
+
+@media(max-width:800px){
+  .about-grid {
+    grid-template-columns:1fr;
+  }
+  .about-title { font-size:28px; }
+}
+</style>
+
+<div class="about-wrapper">
+
+  <!-- MAIN ABOUT CARD -->
+  <div class="about-card">
+    <h2 class="about-title">About SchoolSite</h2>
+
+    <p class="about-text">
+      
+    Gurukul English Medium School & Junior College is a premier educational institution offering **Nursery to 12th standard** education, located in <strong>Mudi, Pr. Dangri, Taluka Amalner, District Jalgaon</strong>. Founded by <strong>Mr. Avinash Manohar Patil</strong>, the institution was established with a vision to provide holistic education that nurtures both academic excellence and overall personality development of students. With a strong focus on science, especially in **11th and 12th IT & Science streams**, the college has consistently produced **100% results**, with every student passing with excellent scores. The curriculum is designed to ensure that children not only gain knowledge but also develop critical thinking, problem-solving skills, and confidence required to succeed in higher education and life.
+  </p>
+
+  
+  </div>
+
+
+  <!-- MISSION VISION SECTION -->
+  <div class="about-grid">
+
+    <div class="feature-card">
+      <h3 class="feature-title">Our Mission</h3>
+      <p class="small">
+        
+    The school follows a student-centered approach where every child is encouraged to explore their potential to the fullest. The vision of Gurukul is to develop well-rounded individuals by emphasizing **moral values, discipline, creativity, and leadership qualities**. Alongside academics, students are engaged in co-curricular activities, sports, and innovative projects that foster teamwork and practical learning. Gurukul English Medium School & Junior College has earned a reputation for producing disciplined, talented, and confident students who excel in both scholastic and co-scholastic areas. The dedicated faculty ensures that each child receives personalized guidance and mentoring, making learning a joyful and enriching experience. With modern infrastructure, a supportive environment, and a commitment to excellence, the school continues to shape future leaders of society.
+  </p>
+    </div>
+
+    <div class="feature-card">
+      <h3 class="feature-title">Our Vision</h3>
+      <p class="small">
+        To build a future-ready school system offering innovation, creativity and  
+        world-class learning with transparency and technology at its core.
+      </p>
+    </div>
+
+  </div>
+
+</div>
+
+{% endblock %}

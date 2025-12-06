@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}{{ course.title }} — SchoolSite{% endblock %}
+
+{% block extra_head %}
+<style>
+
+:root{
+    --neon-blue:#4bb8ff;
+    --neon-pink:#ff4bf1;
+    --neon-green:#39ff9f;
+    --card-dark:#0f172a;
+    --bg-dark:#0d1117;
+}
+
+/* MAIN WRAPPER */
+.course-detail-box{
+    background:rgba(255,255,255,0.04);
+    border:1px solid rgba(255,255,255,0.12);
+    box-shadow:0 0 18px rgba(0,255,255,0.15);
+    padding:22px;
+    border-radius:18px;
+    backdrop-filter:blur(10px);
+    animation:fadeIn .8s ease;
+}
+
+@keyframes fadeIn{
+    from{ opacity:0; transform:translateY(20px); }
+    to{ opacity:1; transform:translateY(0); }
+}
+
+/* FLEX WRAPPER */
+.course-flex{
+    display:flex;
+    gap:22px;
+    flex-wrap:wrap;
+}
+
+/* IMAGE BOX */
+.course-img{
+    flex:1;
+    min-width:280px;
+}
+
+.course-img img{
+    width:100%;
+    height:330px;
+    object-fit:cover;
+    border-radius:14px;
+    box-shadow:0 0 18px rgba(75,184,255,0.35);
+    border:2px solid rgba(75,184,255,0.3);
+    transition:.3s ease;
+}
+.course-img img:hover{
+    transform:scale(1.03);
+    box-shadow:0 0 26px var(--neon-blue);
+}
+
+/* TEXT CONTENT */
+.course-info{
+    flex:1;
+    min-width:280px;
+    color:white;
+}
+
+.course-info h2{
+    font-size:28px;
+    font-weight:700;
+    text-shadow:0 0 10px var(--neon-blue);
+}
+
+.course-info p{
+    line-height:1.6;
+    color:#d1d5db;
+    margin-top:10px;
+}
+
+/* ENROLL BUTTON */
+.enroll-btn{
+    display:inline-block;
+    margin-top:20px;
+    background:linear-gradient(135deg,var(--neon-blue),var(--neon-pink));
+    color:black;
+    padding:12px 26px;
+    font-size:16px;
+    font-weight:600;
+    border-radius:10px;
+    box-shadow:0 0 18px rgba(255,0,255,0.25);
+    transition:.3s ease;
+}
+
+.enroll-btn:hover{
+    transform:scale(1.05);
+    box-shadow:0 0 26px var(--neon-pink),0 0 36px var(--neon-blue);
+}
+
+/* RESPONSIVE */
+@media(max-width:600px){
+    .course-info h2{ font-size:22px; }
+    .course-img img{ height:260px; }
+}
+
+</style>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="course-detail-box">
+
+    <div class="course-flex">
+
+        <!-- IMAGE -->
+        <div class="course-img">
+            <img src="{{ course.image.url }}" alt="{{ course.title }}">
+        </div>
+
+        <!-- CONTENT -->
+        <div class="course-info">
+            <h2>{{ course.title }}</h2>
+
+            <p>{{ course.long_desc }}</p>
+
+            <a href="{% url 'contact' %}" class="enroll-btn"  > Enroll Now  --></a>
+            
+        </div>          
+
+
+    </div>
+
+</div>
+
+{% endblock %}

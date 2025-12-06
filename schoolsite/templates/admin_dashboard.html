@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard — SchoolSite{% endblock %}
+
+{% block content %}
+<style>
+/* Neon Glass Card Style */
+.card {
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(8px);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0,255,255,0.4);
+  border: 1px solid rgba(0,255,255,0.2);
+  margin-bottom: 20px;
+  transition: 0.3s;
+}
+.card:hover {
+  box-shadow: 0 0 25px #00eaff;
+}
+
+/* Titles */
+h2, h3 {
+  color: #00eaff;
+  text-shadow: 0 0 10px #00eaff;
+}
+
+/* Form Inputs */
+input, textarea, select {
+  width: 100%;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid rgba(0,255,255,0.3);
+  background: rgba(255,255,255,0.05);
+  color: #fff;
+  outline: none;
+  transition: 0.2s;
+}
+input:focus, textarea:focus, select:focus {
+  border-color: #00eaff;
+  box-shadow: 0 0 8px #00eaff;
+}
+
+/* Buttons */
+.btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  background: #00eaff;
+  color: #000;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+}
+.btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 10px #00eaff;
+}
+
+/* Small text */
+.small {
+  color: #ccc;
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+/* Recent media grid */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 10px;
+}
+.thumb img, .thumb video {
+  width: 100%;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+.thumb img:hover, .thumb video:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 8px #00eaff;
+}
+
+/* Responsive */
+@media(max-width: 800px){
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+  }
+  .dashboard-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+}
+</style>
+
+<h2>Admin Dashboard</h2>
+
+<div class="dashboard-grid" style="margin-top:12px">
+  <!-- LEFT PANEL -->
+  <div class="card" style="flex:1">
+    <h3>Quick Upload (Multiple)</h3>
+    <form action="{% url 'upload_media' %}" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <input type="file" name="files" multiple accept="image/*,video/*">
+        <input type="text" name="event" placeholder="Event / Certificate name">
+        <input type="date" name="date">
+        <textarea name="description" placeholder="Description (optional)"></textarea>
+        <div><button class="btn" type="submit">Upload</button></div>
+      </div>
+    </form>
+
+    <hr style="border-color: rgba(0,255,255,0.2);" />
+
+    <h3>Recent media</h3>
+    <div class="grid">
+      {% for m in media_list %}
+        <div class="card small" style="padding:6px;">
+          <a href="{% url 'media_detail' m.id %}" class="thumb">
+            {% if m.type=='image' %}
+              <img src="{{ m.file.url }}">
+            {% else %}
+              <video src="{{ m.file.url }}" muted></video>
+            {% endif %}
+          </a>
+          <div style="margin-top:6px"><strong>{{ m.event_name|default:"-" }}</strong></div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- RIGHT PANEL -->
+  <div class="card" style="width:360px">
+    <h3>Stats</h3>
+    <div class="small">Total Courses: {{ courses_count }}</div>
+    <div class="small">Total Media: {{ media_count }}</div>
+    <div class="small">Total Comments: {{ comments_count }}</div>
+    <div style="margin-top:12px">
+      <a class="btn" href="/admin/">Open Django Admin</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

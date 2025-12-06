@@ -1,0 +1,103 @@
+{% load static %}
+
+<style>
+/* Neon Card Style */
+.media-box {
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(8px);
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,255,255,0.4);
+  border: 1px solid rgba(0,255,255,0.2);
+  position: relative;
+  text-align: center;
+}
+
+/* Title */
+.media-title{
+  color:#00eaff;
+  font-size:22px;
+  font-weight:600;
+  text-shadow:0 0 10px #00eaff;
+}
+
+/* Small text */
+.small{
+  color:#ccc;
+  font-size:14px;
+}
+
+/* Image */
+#zoomable{
+  transition:0.3s;
+  border-radius:8px;
+  cursor: pointer;
+  max-width:100%;
+  display:block;
+  margin:auto;
+}
+
+/* Close Button */
+#closeZoom {
+  display:none;
+  position:absolute;
+  top:10px;
+  right:10px;
+  background:red;
+  color:#fff;
+  border:none;
+  border-radius:50%;
+  width:28px;
+  height:28px;
+  font-weight:bold;
+  cursor:pointer;
+  z-index:100;
+  box-shadow: 0 0 10px #ff0000;
+}
+</style>
+
+<div style="display:flex;gap:14px;flex-wrap:wrap">
+
+  <!-- LEFT SIDE MEDIA -->
+  <div style="flex:1;min-width:340px" class="media-box">
+
+    {% if media.type == 'image' %}
+      <div style="position:relative;">
+        <img id="zoomable" src="{{ media.file.url }}" />
+        <button id="closeZoom" onclick="resetZoom()">×</button>
+      </div>
+    {% else %}
+      <video controls style="width:100%;border-radius:10px">
+        <source src="{{ media.file.url }}">
+      </video>
+    {% endif %}
+
+  </div>
+
+  <!-- RIGHT SIDE DETAILS -->
+  <div style="width:340px" class="media-box">
+    <div class="media-title">
+      {{ media.event_name|default:"Event / Certificate" }}
+    </div>
+    <div class="small" style="margin-top:4px">
+      {{ media.date }}
+    </div>
+    <p class="small" style="margin-top:10px">{{ media.description }}</p>
+  </div>
+
+</div>
+
+<script>
+const img = document.getElementById('zoomable');
+const closeBtn = document.getElementById('closeZoom');
+
+img.addEventListener('click', () => {
+  img.style.transform = 'scale(1.5)';  // click par zoom
+  closeBtn.style.display = 'block';    // close button show
+});
+
+function resetZoom(){
+  img.style.transform = 'scale(1)';    // normal size
+  closeBtn.style.display = 'none';     // hide close button
+}
+</script>
